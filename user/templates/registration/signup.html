@@ -1,0 +1,35 @@
+{% extends 'leave_request/base.html' %}
+{% block title %}Sign Up {% endblock %}
+{% block content %}
+<div class="form-wrapper">
+	<h1>Sign Up</h1>
+	<form class="registration-form" method="POST">
+		{% csrf_token %}
+		{% for field in form %}
+		<div class="form-field">
+				<div class="form-field-label">
+					{{ field.label_tag }}
+				</div>
+				{% if field.errors %}
+				<div class="form-field-error">
+					{{ field.errors }}
+				</div>
+				{% endif %}
+				<div class="form-field-control">
+					{{ field }}
+				</div>
+				<div>
+					<small>{{ field.help_text }}</small>
+				</div>
+		</div>
+	{% endfor %}
+	<div class="form-field">
+		<div class="form-field-control">
+			<input  type="submit" value="Submit"/>
+		</div>
+	</div>
+	</form>
+	<p class="text-center">If you already have an account, <a href="{% url 'login' %}">login</a> instead.</p>
+</div>
+
+{% endblock %}

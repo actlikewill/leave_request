@@ -1,0 +1,46 @@
+{% extends 'leave_request/base.html' %}
+
+{% block content %}
+
+<div class="details-wrapper">
+  <h1>Leave Request Details</h1>
+  <div class="leave-request-item">
+    <p>
+      <span>Username: </span>
+      <span>
+      <strong>{{ object.user.username }}</strong>
+      </span>
+    </p>
+    <p>
+      <span>Start Date: </span>
+      <span>
+      <strong>{{ object.start_date }}</strong>
+      </span>
+    </p>
+    <p>
+      <span>End Date: </span>
+      <span>
+      <strong>{{ object.end_date }}</strong>
+      </span>
+    </p>
+    <p>
+      <span>Number of days: </span>
+      <span>
+      <strong>{{ object.number_of_days }}</strong>
+      </span>
+    </p>
+    <p>
+      <span>Leave Type: </span>
+      <span>
+      <strong>{{ object.type }}</strong>
+      </span>
+    </p>
+    <p>
+      <span>Status: </span>
+      <span>
+      <strong>{{ object.status }}</strong>
+      </span>
+    </p>
+  </div> 
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'leave_request/base.html' %}
+
+{% block title %}Create New{% endblock %}
+
+{% block content %}
+
+<div class="form-wrapper">
+  <h1>Leave Request</h1>
+  <form class="leave-request-form" action="" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-field">
+          <div class="form-field-label">
+            {{ field.label_tag }}
+          </div>
+          {% if field.errors %}
+          <div class="form-field-error">
+            {{ field.errors }}
+          </div>
+          {% endif %}
+          <div class="form-field-control">
+            {{ field }}
+          </div>
+          <div>
+            <small>{{ field.help_text }}</small>
+          </div>
+      </div>
+    {% endfor %}
+    <div class="form-field">
+      <div class="form-field-control">
+        <input type="submit" value="Submit">
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

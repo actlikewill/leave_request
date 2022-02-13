@@ -1,0 +1,52 @@
+{% extends "leave_request/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<div class="form-wrapper">
+  <h1>Login</h1>
+  <form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+
+    {% for field in form %}
+      <div class="form-field">
+          <div class="form-field-label">
+            {{ field.label_tag }}
+          </div>
+          {% if field.errors %}
+          <div class="form-field-error">
+            {{ field.errors }}
+          </div>
+          {% endif %}
+          <div class="form-field-control">
+            {{ field }}
+          </div>
+          <div>
+            <small>{{ field.help_text }}</small>
+          </div>
+      </div>
+    {% endfor %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <div class="form-field">
+    <div class="form-field-control">
+      <input type="submit" value="Login">
+    </div>
+  </div>
+  </form>
+
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</div>
+
+{% endblock %}
