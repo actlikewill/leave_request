@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -34,10 +34,17 @@ class LeaveRequest(models.Model):
   def get_number_of_days(self):
     # We calculate the number of days here
 
+
     start_date = self.start_date
     end_date = self.end_date
     number_of_days = end_date - start_date
-    return number_of_days.days
+    count = 0
+    for days in range(number_of_days.days):
+      if (start_date + timedelta(days)).isoweekday() in [6, 7]:
+        continue
+      count += 1
+
+    return count 
 
 
   def save(self, *args, **kwargs):
