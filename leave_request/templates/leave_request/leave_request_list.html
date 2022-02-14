@@ -8,13 +8,30 @@
 
   {% if object_list  %}
 
+  <p class="list-header">
+      <span>Username</span>
+      <span>Leave Type</span>
+      <span>Number of Days</span>
+      <span>Status</span>
+  </p>
+   
+
   {% for object in object_list %}
 
       <a class="list_item" href="{% url 'leave_request_detail' pk=object.pk %}">
         <span>
-            {{ object.user.username }}
+          {{ object.user.username }}
+        </span>
+        <span>
             {{ object.type }}
+        </span>
+        <span>
+          {{ object.number_of_days }}
+        </span>
+        <span>
             {{ object.status }}
+        </span>
+
         </span>
       </a>
 
