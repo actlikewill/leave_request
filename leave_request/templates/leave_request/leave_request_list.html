@@ -2,41 +2,55 @@
 
 {% block content %}
 
-<div class="list_wrapper">
+<div class="flex flex-col justify-center m-6">
 
-  <h1>My Leave Requests</h1>
-
+  <div class="flex justify-center">
+    <h1 class="text-2xl font-bold">My Leave Requests</h1>
+  </div>
   {% if object_list  %}
 
-  <p class="list-header">
-      <span>Username</span>
-      <span>Leave Type</span>
-      <span>Number of Days</span>
-      <span>Status</span>
-  </p>
-   
-
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead>
+      <tr>
+        <th scope="col" class="px-6 py-3">Username</th>
+        <th scope="col" class="px-6 py-3">Leave Type</th>
+        <th scope="col" class="px-6 py-3">Number of Days</th>
+        <th scope="col" class="px-6 py-3">Status</th>
+      </tr>
+    </thead>
+    <tbody>
   {% for object in object_list %}
+      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+          <span>
+          <a class="list_item" href="{% url 'leave_request_detail' pk=object.pk %}">
+            {{ object.user.username }}
+          </span>
+        </a>
+        </th class="px-6 py-4">
+        <td>
+          <span>
+              {{ object.type }}
+          </span>
+        </td class="px-6 py-4">
+        <td>
+          <span>
+            {{ object.number_of_days }}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <span>
+              {{ object.status }}
+          </span>
+        </td>
+      </tr>
 
-      <a class="list_item" href="{% url 'leave_request_detail' pk=object.pk %}">
-        <span>
-          {{ object.user.username }}
-        </span>
-        <span>
-            {{ object.type }}
-        </span>
-        <span>
-          {{ object.number_of_days }}
-        </span>
-        <span>
-            {{ object.status }}
-        </span>
+    {% endfor %}
 
-        </span>
-      </a>
-
-  {% endfor %}
-
+    </tbody>
+  </table>
+  </div>
   {% else %}
 
   <p>You do not have any leave requests.</p>

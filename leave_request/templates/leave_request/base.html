@@ -1,28 +1,41 @@
+{% load compress %}
 {% load static %}
+{% load tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="{% static 'leave_request/style.css' %}">
+
+  {% tailwind_css %}
+
   <title>Leave Request | {% block title %} Home {% endblock %}</title>
 </head>
-<body>
+<body class=""">
 
-  <nav class="main_nav">
-    <ul>
-      <li><a href="{% url 'leave_request_list' %}">Home</a></li>
-      <li><a href="{% url 'leave_request_new' %}">Create New Leave Request</a></li>
-      {% if user.is_authenticated %}
-      <li>Welcome {{ user.username }}</li>
-      <li><a href="{% url 'logout' %}">Logout</a></li>
-      {% else %}
-      <li><a href="{% url 'user_register' %}">Sign Up</a></li>
-      <li><a href="{% url 'login' %}">Login</a></li>
-      {% endif %}
-    </ul>
+  <nav class=" text-cyan-500 flex-col bg-slate-900 pt-3 main_nav">
+    <div class="flex">
+      <div class="flex ">
+        <a href=""><h1 class="px-6 font-bold text-xl">Leave Request</h1></a>
+      </div>
+      <ul class="flex flex-1 justify-center">
+        <li class="px-6 hover:underline hover:text-cyan-300 shadow-cyan-100"><a href="{% url 'leave_request_list' %}">Home</a></li>
+        <li class="px-6"><a href="{% url 'leave_request_new' %}">Create New</a></li>
+        {% if user.is_authenticated %}
+        <li>Welcome {{ user.username }}</li>
+        <li class="px-6"><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li class="px-6"><a href="{% url 'user_register' %}">Sign Up</a></li>
+        <li class="px-6"><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>    
   </nav>
+
+  <div class="" id="search-results"></div>
+
+
 
 
   {% if messages %}
@@ -37,4 +50,15 @@
   content
   {% endblock %}
 </body>
+
+{% compress js%}
+  <script src="{% static 'src/htmx.js' %}"></script>
+{% endcompress %}
+
+<script>
+   document.body.addEventListener('htmx:configRequest', event => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+</script>
+
 </html>

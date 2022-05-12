@@ -1,13 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leave Request</title>
-</head>
-<body>
-  <h1>LEAVE REQUEST</h1>
-  
-</body>
-</html>
+{% extends "leave_request/base.html" %}
+
+{% block content %}
+  <div class="w-small w-2/3 mx-auto py-10 text-gray-600">
+    <input
+      type="text"
+      name="search"
+      hx-post="search/"
+      hx-trigger="keyup changed delay:250ms"
+      hx-indicator=".htmx-indicator"
+      hx-target="#todo-results"
+      placeholder="Search"
+      class="bg-white h-10 px-5 pr-10 rounded-full text-2xl focus:outline-none"
+    >
+    <span class="htmx-indicator">Searching...</span>
+  </div>
+  <table class="border-collapse w-small w-2/3 mx-auto">
+    <thead>
+      <tr>
+        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">#</th>
+        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Title</th>
+        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Completed</th>
+      </tr>
+    </thead>
+    <tbody id="todo-results">
+
+      {% for doodle in doodles %}
+  <tr
+    class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+      {{doodle.date}}
+    </td>
+    <td 
+      class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static"
+      >
+        <span 
+        hx-get="image?url=http:{{doodle.url}}"
+        hx-trigger="click"
+        hx-target="#{{doodle.id}}"
+        class="cursor-pointer underline text-blue-500"
+        >{{doodle.title}}</span>
+    </td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+      {{doodle.query}}
+    </td>
+  </tr>
+  <tr id="{{doodle.id}}">
+    <td colspan="3"><div class="w-full h-10 bg-red-100"></div></td>
+  </tr>
+
+{% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

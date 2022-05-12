@@ -18,7 +18,7 @@ from django.urls import path, include
 from leave_request.views import LeaveRequestListView
 
 urlpatterns = [
-    path('', LeaveRequestListView.as_view()),
+    # path('', LeaveRequestListView.as_view()),
     path('admin/', admin.site.urls),
     path('leave_request/', include('leave_request.urls')),
     path('user/', include('user.urls')),

@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from django.db import models
 from django.contrib.auth.models import User
+from treebeard.mp_tree import MP_Node
 # Create your models here.
 
 class LeaveRequest(models.Model): 
@@ -51,3 +52,21 @@ class LeaveRequest(models.Model):
     self.number_of_days = self.get_number_of_days() 
     super(LeaveRequest, self).save(*args, **kwargs)
     
+
+class Category(MP_Node):
+  name = models.CharField(max_length=100)
+
+  node_order_by = ['name']
+
+
+  def __str__(self):
+    return f'Category: {self.name}'
+
+    
+
+class Product(models.Model):
+  name = models.CharField(max_length=100)
+  category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f'Product: {self.name}'
